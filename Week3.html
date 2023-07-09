@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Wordle</title>
+    </head>
+    <body>
+        <h1>Wordle</h1>
+        <style>
+            input{
+                width: 50px;
+                height: 50px;
+                font-size: 40px;
+                text-align: center;
+            }
+            button{
+                height: 50px;
+                font-size: 25px;
+            }
+        </style>
+
+        <button draggable="false" style=" width: 100px;">Enter</button>
+        <br><br>
+        
+        <input class="inputstyle">
+        <input class="inputstyle">
+        <input class="inputstyle">
+        <input class="inputstyle">
+        <input class="inputstyle">
+        
+        <!-- <div id="endElement">
+            <br><br>
+            <button draggable="false"> Show the solution</button>
+        </div> -->
+        <script>
+            var inputElements = document.getElementsByClassName('inputstyle');
+
+            for (var i = 0; i < inputElements.length; i++) {
+                inputElements[i].addEventListener('input', function() {
+                    if (this.value.length > 1) {
+                     this.value = this.value.slice(0, 1);
+                    }
+                });
+            }
+            
+            var dictionary=["about","after","again","below","bring"
+                            ,"could","every","first","found","great"
+                            ,"house","large","learn","never","other"
+                            ,"place","right","small","there","where"];
+
+            var solution = dictionary[Math.floor(Math.random() * dictionary.length)];
+
+            document.querySelector('button').addEventListener('click', 
+            function(){
+                var input=document.querySelectorAll('.inputstyle');
+                let cnt= 0;
+
+                for(let i=0; i<5; i++){
+                    if(input[i].value==solution[i]){
+                        input[i].style.background='green';
+                        cnt++;
+                    } else if(solution.includes(input[i].value)){
+                        input[i].style.background='yellow';
+                    }else{
+                        input[i].style.background='lightgrey';
+                    }
+                    input[i].classList.remove('inputstyle');
+                }
+                
+                if(cnt!=5){
+                    var template = `<div>
+                        <input class="inputstyle">
+                        <input class="inputstyle">
+                        <input class="inputstyle">
+                        <input class="inputstyle">
+                        <input class="inputstyle">
+                        </div>`;
+                
+                    //let targeElement = document.getElementById('endElement');
+                    //targetElement.insertAdjacentHTML('beforebegin', template);
+                    document.querySelector('body').insertAdjacentHTML('beforeend', template);
+                }
+            })
+
+        </script>
+
+    </body>
+</html>
